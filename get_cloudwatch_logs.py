@@ -2,7 +2,7 @@
 # -*- encoding: utf-8
 
 import boto3
-def get_log_events(log_group, , log_stream_name, start_time=None, end_time=None):
+def get_log_events(log_group, log_stream_name, start_time=None, end_time=None):
     client = boto3.client('logs')
     kwargs = {
         'logGroupName': log_group,
@@ -25,18 +25,22 @@ def get_log_events(log_group, , log_stream_name, start_time=None, end_time=None)
         except KeyError:
             break
 
+
 if __name__ == '__main__':
-    log_group = '<LOG_GROUP_NAME>'
-    log_stream_name = '<LOG_STREAM_NAME>'
+    log_group = 'log_group'
+    log_stream_name = 'log_stream_name'
     start_time = 1570053600000 # ms_since_epoch https://www.epochconverter.com/?source=searchbar&q=1511213601140
     end_time = 1570068000000 # ms_since_epoch https://www.epochconverter.com/?source=searchbar&q=1511213601140
 
     logs = get_log_events(
         log_group=log_group,
+        log_stream_name=log_stream_name,
         start_time=start_time,
         end_time=end_time
     )
+
     with open("file.txt", "w") as f:
         for event in logs:
             f.write(event['message'].rstrip()+'\n')
+
 
