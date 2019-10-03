@@ -36,6 +36,7 @@ if __name__ == '__main__':
         start_time=start_time,
         end_time=end_time
     )
-    for event in logs:
-        with open("file.txt", "w") as f:
+    with open("file.txt", "w") as f:
+        for event in logs:
             f.write(event['message'].rstrip()+'\n')
+
